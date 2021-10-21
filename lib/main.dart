@@ -24,7 +24,7 @@ const MaterialColor primaryBlack = MaterialColor(
 );
 const int _blackPrimaryValue = 0xFF000000;
 
-void main() => runApp(MakeTitle());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 

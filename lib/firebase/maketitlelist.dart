@@ -1,3 +1,4 @@
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,13 +19,19 @@ class _MakeTitleState extends State<MakeTitle> {
   void initstate() {
     super.initState();
   }
+
   final dRef = FirebaseDatabase.instance.reference();
-  activeListener() async{
+
+  activeListener() async {
     dynamic a = [];
-    await dRef.child('금요일').onValue.forEach((element) {
+    await dRef
+        .child('금요일')
+        .onValue
+        .forEach((element) {
       qq = element.snapshot.value;
     });
   }
+
   // List<Need> _needs = [];
   //
   // @override
@@ -46,15 +53,27 @@ class _MakeTitleState extends State<MakeTitle> {
     activeListener();
     return MaterialApp(
         home: Scaffold(
-            body: Column(
-                children:[
-                  Container(
-                      child: Text(qq[0])
-                  ),
-                  ElevatedButton(onPressed: activeListener, child: Text("dd"))
-                ])
-        )
-    );
+          body: Column(
+            children: [
+              Flexible(
+                  child: FirebaseAnimatedList(
+                      query: FirebaseDatabase.instance
+                          .reference()
+                          .child('mon'),
+                      itemBuilder:
+                          (BuildContext context,
+                          DataSnapshot snapshot,
+                          Animation<double> animation,
+                          int x){
+                        print(snapshot.value);
+                        return Container(
+                          child: Text(snapshot.value),
+                        );
+                      }
+                  ))
+            ],
+          ),
+        ));
   }
 }
 

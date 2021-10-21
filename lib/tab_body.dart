@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -69,7 +70,22 @@ class _TestState extends State<Test> {
                           child: Container(
                             color: Colors.white,
                             // 아직 처리 x
-                            //child: Text(qq[index-1]),
+                            child: FirebaseAnimatedList(
+                                query: FirebaseDatabase.instance
+                                    .reference()
+                                    .child('mon'),
+                                itemBuilder:
+                                (BuildContext context,
+                                DataSnapshot snapshot,
+                                Animation<double> animation,
+                                int x){
+                                  print(snapshot.value);
+                                  return Container(
+                                    child: Text(snapshot.value),
+                                  );
+                                  index += 1;
+                                }
+                                )
                           ),
                           flex: 1,
                         ),
